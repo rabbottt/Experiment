@@ -17,11 +17,14 @@ classdef vecmath
             % v: any vector
             % uv: unit vector of v
            
+            % compute magnitude
             mag = norm(v);
-            if mag ~= 0
+            
+            % compute unit vector
+            if mag ~= 0 
                 uv = v/mag; 
-            else
-                uv = 0;
+            else % mag == 0, avoid division by 0
+                uv = 0*v;
             end
         end
         
@@ -134,6 +137,21 @@ classdef vecmath
             % removes last ROW
             pts = pts(1:3,:);
         end
+        
+        function [v,f] = createRect(x0,y0,xm,ym)
+            % vertices for rectangle 
+            v = [  x0      y0; ... % 1 % lower left
+                   xm      y0; ... % 2 % lower right
+                   xm      ym; ... % 3 % upper right
+                   x0      ym];    % 4 % upper left
+            
+            f = [ 1 2 3 4 ];       % face
+        end
+        
+        % return bounded value clipped between lb and ub
+        function y = clip(x,lb,ub)
+            y = min( max(x, lb), ub);
+        end  
         
         
     end
