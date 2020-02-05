@@ -28,6 +28,25 @@ classdef vecmath
             end
         end
         
+        function th = aBetween2Vecs(v1,v2)
+            % Angle between any 2 vectors of same length
+            % v1, v2: vectors of same dimensions
+            % th: angle (radians) between v1 and v2
+            %     if v1 or v2 are zero vectors, th = NaN
+            
+            % magnitudes
+            v1mag = norm(v1);
+            v2mag = norm(v2);
+            
+            % compute angle between v1 and v2
+            if any([v1mag == 0, v2mag == 0]) % avoid division by 0
+                th = NaN; % not valid
+            else % valid           
+                th = acos(dot(v1,v2)/(v1mag*v2mag));
+            end
+
+        end
+        
         % (3x3) tranformation matrix to:
         %   reflect about a plane
         function R = ReflectAboutPlane(plane)
@@ -97,6 +116,24 @@ classdef vecmath
                 R = eye(3) + ssc + ssc^2*(1-dot(v1,v2))/(norm(v)^2);
             end
             
+        end
+        
+        function Rx = RotX(th)
+            Rx = [  1   0        0;...
+                    0   cos(th) -sin(th);...
+                    0   sin(th)  cos(th)];
+        end
+
+        function Ry = RotY(th)
+            Ry = [  cos(th)     0   sin(th)   ;...
+                    0           1   0         ;...
+                    -sin(th)    0   cos(th)   ];        
+        end
+
+        function Rz = RotZ(th)
+            Rz = [  cos(th)     -sin(th)    0   ;...
+                    sin(th)      cos(th)    0   ;...
+                    0            0          1   ];
         end
     
         % homogenous (4x4) transformation matrix to: 
