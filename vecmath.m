@@ -13,6 +13,12 @@ classdef vecmath
             new_data = (oR(:,2)-oR(:,1))./(iR(:,2)-iR(:,1)).*(data - iR(:,1)) + oR(:,1);    
         end
         
+        function maxn = maxnorm(ranges)
+            % ranges: (n x [min max]) matrix 
+            % maxn: (scaler) maximum norm possible from range input
+            maxn = norm(max(abs(ranges),[],2));
+        end
+        
         function [uv, mag] = unitvec(v)
             % v: any vector
             % uv: unit vector of v
